@@ -2,8 +2,8 @@
 {% load static %}
 
 {% block content %}
-    <div class="container-fluid content">
-        <h4>countdown timer</h4>
+    <div class="container-fluid countdown-timer">
+        <h1 align="center">00:00:00:00</h1>
     </div>
 
     <!-- Sections -->
@@ -11,55 +11,63 @@
     <!-- countdown timer or result depending on time  -->
 
     <!-- info section - ticket count and pot -->
-    <div class="container-fluid content">
+    <div class="container-fluid lottery-info">
         <div class="row">
-            <div class="col">
-                Ticket Count
+            <div class="col" align="center">
+                <h2>500/40,000</h2>
             </div> 
-            <div class="col">
-                Pot
+            <div class="col" align="center">
+                <h2>₳ 20,000</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col" align="center">
+                <h5>Ticket Count</h5>
+            </div> 
+            <div class="col" align="center">
+                <h5>Pot</h5>
             </div>
         </div>
     </div>
 
     <!-- top bets section -->
-    <div class="container-fluid content top-bets">
-        <h3>Top This Week</h3>
+    <div class="container-fluid top-bets">
+        <h3 class="mb-4">Top Bets This Week</h3>
         <div class="table-responsive">
-            <table class="table table-sm">
+            <table class="table table-bordered table-sm">
                 <thead align="center">
                     <tr>
                         <th>
-                            Responsibility Center
+                            Lucky - 5
                         </th>
                         <th>
-                            Allotment
+                            No. of tickets
                         </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody align="center">
                     <tr>
                         <td>
-                            xxx
+                            53421
                         </td>
                         <td>
-                            xxx
+                            5
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            xxx
+                            21345
                         </td>
                         <td>
-                            xxx
+                            3
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            xxx
+                            25235
                         </td>
                         <td>
-                            xxx
+                            3
                         </td>
                     </tr>
                 </tbody>
