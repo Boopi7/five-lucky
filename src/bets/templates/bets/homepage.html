@@ -1,7 +1,71 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-    {% include 'bets/countdown_timer.html' %}
+    <div class="container-fluid content">
+        <h4>countdown timer</h4>
+    </div>
 
+    <!-- Sections -->
+
+    <!-- countdown timer or result depending on time  -->
+
+    <!-- info section - ticket count and pot -->
+    <div class="container-fluid content">
+        <div class="row">
+            <div class="col">
+                Ticket Count
+            </div> 
+            <div class="col">
+                Pot
+            </div>
+        </div>
+    </div>
+
+    <!-- top bets section -->
+    <div class="container-fluid content top-bets">
+        <h3>Top This Week</h3>
+        <div class="table-responsive">
+            <table class="table table-sm">
+                <thead align="center">
+                    <tr>
+                        <th>
+                            Responsibility Center
+                        </th>
+                        <th>
+                            Allotment
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            xxx
+                        </td>
+                        <td>
+                            xxx
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            xxx
+                        </td>
+                        <td>
+                            xxx
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            xxx
+                        </td>
+                        <td>
+                            xxx
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 {% endblock %}
+
