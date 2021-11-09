@@ -1,6 +1,16 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.views import View
 
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the bets index.")
+class HomeView(View):
+    template_name = 'bets/homepage.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, {})
+
+
+class BuyTicketView(View):
+    template_name = 'bets/buyticket.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, {})
