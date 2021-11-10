@@ -9,21 +9,30 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import json
 from pathlib import Path
 
 try:
     with open('/etc/luckyfive-config.json') as config_file:
-       config = json.load(config_file)
+        config = json.load(config_file)
 except:
     config = {
-        'SECRET_KEY': '',
+        'DEBUG': 'True',
+        'SECRET_KEY': 'xxxx',
         'ALLOWED_HOSTS': [],
         'DB_NAME': '',
         'DB_USER': '',
         'DB_PASSWORD': '',
-        'DB_HOST': ''
+        'DB_HOST': '',
+        'POLICY_DIR': '',
+        'PAYMENT_SKEY': '',
+        'PAYMENT_VKEY': ''
     }
+
+# Cardano utilities
+POLICY_DIR = config.get('POLICY_DIR')
+PAYMENT_SKEY = config.get('PAYMENT_SKEY')
+PAYMENT_VKEY = config.get('PAYMENT_VKEY')
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,7 +46,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config.get('DEBUG')
 
 ALLOWED_HOSTS = config.get('ALLOWED_HOSTS')
 
@@ -147,8 +156,3 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-try:
-    from .local_settings import *
-except ImportError:
-    pass

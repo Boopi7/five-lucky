@@ -13,6 +13,7 @@ echo "Creating directory for policy scripts"
 mkdir $main_dir/policy
 
 # diretory for payment keys
+# TODO: sensitive information, please remove
 echo "Creating directory for payment keys"
 mkdir $main_dir/payment
 
