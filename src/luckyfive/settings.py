@@ -12,6 +12,20 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 
+try:
+    with open('/etc/luckyfive-config.json') as config_file:
+       config = json.load(config_file)
+except:
+    config = {
+        'SECRET_KEY': '',
+        'ALLOWED_HOSTS': [],
+        'DB_NAME': '',
+        'DB_USER': '',
+        'DB_PASSWORD': '',
+        'DB_HOST': ''
+    }
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,12 +34,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-misn(r0)xltxt&v!hg=h4ym-0h6q9$zg%edn8x+2)sp8*fs^(j'
+SECRET_KEY = config.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config.get('ALLOWED_HOSTS')
 
 
 # Application definition
@@ -77,8 +91,12 @@ WSGI_APPLICATION = 'luckyfive.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': config.get('DB_NAME'),
+        'USER': config.get('DB_USER'),
+        'PASSWORD': config.get('DB_PASSWORD'),
+        'HOST': config.get('DB_HOST'),
+        'PORT': '',
     }
 }
 
