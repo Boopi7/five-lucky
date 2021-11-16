@@ -1,8 +1,8 @@
 import subprocess
 
 from django.conf import settings
-from bets.models import Lottery
-from bets.cardano.operations import (
+from lottery.models import Lottery
+from lottery.cardano.operations import (
     generate_minting_policy)
 
 
@@ -13,7 +13,7 @@ def new_lottery():
     print(policyID)
 
     # Create a lottery object every week
-    #Lottery.objects.create()
+    # Lottery.objects.create()
     pass
 
 
