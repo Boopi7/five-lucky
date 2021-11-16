@@ -1,9 +1,11 @@
 from django.urls import path
 
-from .views import (
+from lottery.views.home import (
     HomeView,
     BuyTicketView
 )
+
+app_name = 'lottery'
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
