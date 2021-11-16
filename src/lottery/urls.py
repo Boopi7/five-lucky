@@ -1,9 +1,7 @@
 from django.urls import path
 
-from lottery.views.home import (
-    HomeView,
-    BuyTicketView
-)
+from lottery.views.home import HomeView
+from lottery.views.tickets import BuyTicketView
 
 app_name = 'lottery'
 
