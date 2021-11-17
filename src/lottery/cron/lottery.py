@@ -17,7 +17,7 @@ def new_lottery():
     subprocess.run(['mkdir', '-p', path])
 
     # Generate policy script for minting
-    policyID = generate_minting_policy(path)
+    policyID = generate_minting_policy(path + '/')
 
     # Create a lottery object every week
     # Lottery.objects.create()
