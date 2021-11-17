@@ -22,10 +22,10 @@ class Lottery(models.Model):
 
     # Determines the order of the lottery
     # Starts with 1
-    number = models.PositiveIntegerField()
+    number = models.PositiveIntegerField(unique=True)
 
     # The lottery draw date (Sunday 09:00 UTC)
-    date = models.DateTimeField()
+    draw_date = models.DateTimeField()
 
     # The policy ID that will be used to mint 
     # the tickets in this lottery
