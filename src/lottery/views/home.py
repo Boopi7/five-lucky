@@ -5,7 +5,7 @@ from django.views import View
 
 
 class HomeView(View):
-    template_name = 'bets/homepage.html'
+    template_name = 'lottery/homepage.html'
 
     def get(self, request, *args, **kwargs):
         # Get today in UTC
@@ -44,11 +44,4 @@ class HomeView(View):
 
             # return date and create countdown timer in the frontend
 
-        return render(request, self.template_name, {})
-
-
-class BuyTicketView(View):
-    template_name = 'bets/buyticket.html'
-
-    def get(self, request, *args, **kwargs):
         return render(request, self.template_name, {})

@@ -5,6 +5,7 @@ from .models import (
     Bet
 )
 
+
 # Register your models here.
 admin.site.register(LuckyFive)
 admin.site.register(Lottery)

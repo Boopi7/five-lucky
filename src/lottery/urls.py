@@ -1,9 +1,9 @@
 from django.urls import path
 
-from .views import (
-    HomeView,
-    BuyTicketView
-)
+from lottery.views.home import HomeView
+from lottery.views.tickets import BuyTicketView
+
+app_name = 'lottery'
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),

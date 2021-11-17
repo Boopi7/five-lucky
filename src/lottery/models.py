@@ -1,4 +1,3 @@
-from datetime import datetime, timezone
 from django.db import models
 
 
@@ -8,25 +7,27 @@ class LuckyFive(models.Model):
     number = models.CharField(max_length=5)
 
     # Something that could verify that this number
-    # is absolutely random (random.org)
+    # is truly random (random.org)
     signature = models.CharField(max_length=200)
 
     def __str__(self):
         return self.number
 
 
-""" Create a cron job that will create a lottery
-    object every week (Monday 00:00 UTC)"""
 class Lottery(models.Model):
-    """Determins if the particular lottery is active or not.
-       True means that it is the current ongoing lottery.
-       There should be only one active lottery object """
+    # Determins if the particular lottery is active or not
+    # True means that it is the current ongoing lottery
+    # There should be only one active lottery object
     is_active = models.BooleanField(default=True)
 
-    # The lottery draw date (Sunday 09:00 UTC)
-    date = models.DateTimeField()
+    # Determines the order of the lottery
+    # Starts with 1
+    number = models.PositiveIntegerField(unique=True)
 
-    # The policy ID that will be used to mint
+    # The lottery draw date (Sunday 09:00 UTC)
+    draw_date = models.DateTimeField()
+
+    # The policy ID that will be used to mint 
     # the tickets in this lottery
     policy_id = models.CharField(max_length=250)
 
@@ -50,28 +51,21 @@ class Lottery(models.Model):
 
 
 class Bet(models.Model):
-    # The transaction hash of the betting action
-    tx_hash = models.CharField(
-        max_length=200,
-        null=True,
-        blank=True
-    )
+  	# The bettor's lucky-five number
+    lucky_five = models.CharField(max_length=5)
 
-    # The bettors UTXO where the system sent the ticket NFT
+    # The address where the bettor will send ADA to
+    payment_address = models.CharField(max_length=250)
+
+    # The bettor's UTXO where the ticket-nft was sent
     bettor = models.CharField(
         max_length=250,
         null=True,
         blank=True)
 
-    # The address where the better will send ADA to
-    payment_address = models.CharField(max_length=250)
-
     # The status of the bettor's bet after checking if
     # he/she actually sent the ADA
     is_active = models.BooleanField(default=False)
-
-    # The bettor's lucky-five number
-    lucky_five = models.CharField(max_length=5)
 
     # The lottery this bet is tied to
     lottery = models.ForeignKey(
@@ -79,7 +73,7 @@ class Bet(models.Model):
         null=True,
         on_delete=models.SET_NULL)
 
-    # The ticket/nft assetID
+    # The ticket-nft assetID
     ticket = models.CharField(
         max_length=250,
         null=True,
@@ -87,6 +81,3 @@ class Bet(models.Model):
 
     def __str__(self):
         return self.tx_hash
-
-
-
