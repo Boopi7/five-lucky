@@ -13,11 +13,11 @@ def new_lottery():
     # Create directory for the new policy
     dir_name = datetime.now(
         timezone.utc).strftime('%m_%d_%y')
-    path = settings.POLICY_DIR + dir_name
-    subprocess.run(['mkdir', '-p', path])
+    policy_path = settings.POLICY_DIR + dir_name
+    subprocess.run(['mkdir', '-p', policy_path])
 
     # Generate policy script for minting
-    policyID = generate_minting_policy(path)
+    policyID = generate_minting_policy(policy_path)
 
     # Create a lottery object every week
     # Lottery.objects.create()
