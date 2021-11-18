@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from django.db import models
 
 
@@ -20,10 +21,6 @@ class Lottery(models.Model):
     # There should be only one active lottery object
     is_active = models.BooleanField(default=True)
 
-    # Determines the order of the lottery
-    # Starts with 1
-    number = models.PositiveIntegerField(unique=True)
-
     # The lottery draw date (Sunday 09:00 UTC)
     draw_date = models.DateTimeField()
 
@@ -38,15 +35,20 @@ class Lottery(models.Model):
         blank=True,
         on_delete=models.SET_NULL)
 
-    def __str__(self):
-        return self.date
+    date_created = models.DateTimeField(
+        auto_now_add=True)
 
-    @property
-    def current(self):
+    def __str__(self):
+        formatted_date = self.draw_date.strftime(
+            '%B %d, %Y %H:%M %Z')
+        return 'Lottery ' + str(self.id) + \
+            ' - ' + formatted_date
+
+    def get_current_lottery():
         now = datetime.now(timezone.utc)
         current = Lottery.objects.filter(
             is_active=True,
-            date__gte=now).first()
+            draw_date__gte=now).last()
         return current
 
 
