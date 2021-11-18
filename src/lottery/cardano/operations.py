@@ -9,9 +9,9 @@ def generate_minting_policy(policy_dir):
     skey = policy_dir + 'policy.skey'
 
     # Create policy script file
-    subprocess.run(['touch', policy_script],
-        capture_output=True,
-        text=True)
+    # subprocess.run(['touch', policy_script],
+    #     capture_output=True,
+    #     text=True)
 
     # Generate policy key pairs
     gen_key = ('cardano-cli address key-gen '
@@ -31,7 +31,11 @@ def generate_minting_policy(policy_dir):
         text=True)
     key_hash = output.stdout.strip()
 
-    print(key_hash)
-    # write to policy script
+    # create policy script
+    script = ('\n    "keyHash": {},'
+        '\n    "type": "sig"\n').format(key_hash)
+    f = open(policy_script, 'w')
+    f.write("{" + script + "}\n")
+    f.close()
     
     return 'PolicyID: xxxxxxxxxxxxxxxxxxxx'
