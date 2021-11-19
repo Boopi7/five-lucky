@@ -1,4 +1,4 @@
-import subprocess
+import subprocess, requests, json
 
 from datetime import (
     datetime, timezone, timedelta)
@@ -41,6 +41,33 @@ def new_lottery():
 # Every Sunday 09:00 UTC
 def draw_lottery():
     # Generate luckyfive number
+    url = 'https://api.random.org/json-rpc/4/invoke'
+    headers = {'Content-Type': 'application/json'}
+    payload = {
+        'jsonrpc': '2.0',
+        'method': 'generateSignedIntegerSequences',
+        'params': {
+            'apiKey': settings.LUCKYFIVE_API_KEY,
+            'n': 1,
+            'length': 5,
+            'min': 0,
+            'max': 9,
+            'base': 10,
+            'userData': 'LuckyFive Weekly Draw'
+        },
+        'id': 1
+    }
+
+    response = requests.post(
+        url, data=json.dumps(payload), headers=headers)
+    status_code = response.status_code
+
+    if status_code == 200:
+        response_dict = json.loads(response.text)
+        print('Successfuly generated random number')
+        print(response_dict)
+    else:
+        print('Error generating random number')
 
     # Create LuckyFive object
 

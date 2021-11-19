@@ -19,6 +19,7 @@ except:
     config = {
         'DEBUG': 'True',
         'SECRET_KEY': 'xxxx',
+        'LUCKYFIVE_API_KEY': 'xxxx',
         'ALLOWED_HOSTS': [],
         'DB_NAME': '',
         'DB_USER': '',
@@ -34,6 +35,8 @@ POLICY_DIR = config.get('POLICY_DIR')
 PAYMENT_SKEY = config.get('PAYMENT_SKEY')
 PAYMENT_VKEY = config.get('PAYMENT_VKEY')
 
+# Luckyfive API key used to generate the random numbers
+LUCKYFIVE_API_KEY = config.get('LUCKYFIVE_API_KEY')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
