@@ -40,4 +40,14 @@ def new_lottery():
 
 # Every Sunday 09:00 UTC
 def draw_lottery():
+    # Generate luckyfive number
+
+    # Create LuckyFive object
+
+    # Update luckyfive in lottery object
+
+    # Draw lottery winners
+
+    # Deactivate current lottery
+
     pass
