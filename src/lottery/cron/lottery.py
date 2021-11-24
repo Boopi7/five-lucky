@@ -39,9 +39,9 @@ def new_lottery():
 
 
 # Every Sunday 09:00 UTC
-def draw_lottery():
+def draw_luckyfive():
     # Generate luckyfive number
-    url = 'https://api.random.org/json-rpc/4/invoke'
+    status_code = 0
     headers = {'Content-Type': 'application/json'}
     payload = {
         'jsonrpc': '2.0',
@@ -58,23 +58,31 @@ def draw_lottery():
         'id': 1
     }
 
-    response = requests.post(
-        url, data=json.dumps(payload), headers=headers)
-    status_code = response.status_code
+    while (status_code != 200):
+        response = requests.post(
+            'https://api.random.org/json-rpc/4/invoke',
+            data=json.dumps(payload),
+            headers=headers)
+        status_code = response.status_code
 
-    if status_code == 200:
-        response_dict = json.loads(response.text)
-        print('Successfuly generated random number')
-        print(response_dict)
-    else:
-        print('Error generating random number')
+        if status_code == 200:
+            response_dict = response.json()
 
-    # Create LuckyFive object
+            if 'error' in response_dict.keys():
+                status_code = 500
+                print('Error processing request. Retrying.')
+            else:
+                print('Request Successful!')
 
-    # Update luckyfive in lottery object
+                # Get current lottery
+                current_lottery = Lottery.get_current_lottery()
+                current_lottery.lucky_five = response_dict
+                current_lottery.save()
 
-    # Draw lottery winners
+                # Draw lottery winners
 
-    # Deactivate current lottery
+                # Deactivate current lottery
+        else:
+            print('Error processing request. Retrying.')
 
     pass
