@@ -1,18 +1,7 @@
 from datetime import datetime, timezone
 from django.db import models
-
-
-# The LuckyFive that will be drawn every lottery
-class LuckyFive(models.Model):
-    # The result winning number
-    number = models.CharField(max_length=5)
-
-    # Something that could verify that this number
-    # is truly random (random.org)
-    signature = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.number
+from django.contrib.postgres.fields import (
+    ArrayField)
 
 
 class Lottery(models.Model):
@@ -29,11 +18,9 @@ class Lottery(models.Model):
     policy_id = models.CharField(max_length=250)
 
     # The lucky-five lottery result
-    lucky_five = models.OneToOneField(
-        LuckyFive,
+    lucky_five = models.JSONField(
         null=True,
-        blank=True,
-        on_delete=models.SET_NULL)
+        blank=True)
 
     date_created = models.DateTimeField(
         auto_now_add=True)
@@ -54,7 +41,9 @@ class Lottery(models.Model):
 
 class Bet(models.Model):
   	# The bettor's lucky-five number
-    lucky_five = models.CharField(max_length=5)
+    lucky_five = ArrayField(
+        models.PositiveIntegerField(),
+        size=5)
 
     # The address where the bettor will send ADA to
     payment_address = models.CharField(max_length=250)
