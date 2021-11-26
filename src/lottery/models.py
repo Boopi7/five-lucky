@@ -36,6 +36,14 @@ class Lottery(models.Model):
             'result').get('random').get(
             'data')[0]
 
+    @property
+    def bets(self):
+        return self.bet_set.all()
+
+    @property
+    def winners(self):
+        return list(self.lotterywinner_set.all())
+
     def get_current_lottery():
         now = datetime.now(timezone.utc)
         current = Lottery.objects.filter(
@@ -81,3 +89,27 @@ class Bet(models.Model):
 
     def __str__(self):
         return str(self.lucky_five)
+
+
+class LotteryWinner(models.Model):
+    lottery = models.ForeignKey(
+        Lottery,
+        on_delete=models.CASCADE)
+
+    # The bet of the winner
+    bet = models.ForeignKey(
+        Bet,
+        on_delete=models.CASCADE)
+
+    # Determines if the winner is paid or not
+    is_fulfilled = models.BooleanField(
+        default=False)
+
+    # The transaction ID of the prize payment
+    tx_id = models.CharField(
+        max_length=250,
+        null=True,
+        blank=True)
+
+    def __str__(self):
+        return str(self.bet)
