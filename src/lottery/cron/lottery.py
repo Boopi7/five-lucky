@@ -5,7 +5,7 @@ from datetime import (
 from django.conf import settings
 
 from lottery.models import (Lottery,
-    Bet)
+    Bet, LotteryWinner)
 from lottery.cardano.operations import (
     generate_minting_policy)
 
@@ -84,11 +84,15 @@ def draw_winners():
                     'result').get('random').get('data')[0]
                 print(lucky_five)
 
-                winners = Bet.objects.filter(
+                winning_bets = Bet.objects.filter(
                     lottery=current_lottery,
-                    lucky_five=lucky_five,
                     is_active=True)
-                print(winners)
+                lottery_winners = list(LotteryWinner(
+                    bet=bet, lottery=current_lottery)
+                    for bet in winning_bets)
+                print(lottery_winners)
+                LotteryWinner.objects.bulk_create(
+                    lottery_winners)
 
                 # Deactivate current lottery
                 current_lottery.is_active = False

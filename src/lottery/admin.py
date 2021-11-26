@@ -1,8 +1,6 @@
 from django.contrib import admin
 from .models import (
-    Lottery,
-    Bet
-)
+    Lottery, Bet, LotteryWinner)
 
 
 # Register your models here.
