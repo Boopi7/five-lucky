@@ -13,5 +13,6 @@ class LotteryAdmin(admin.ModelAdmin):
 
 @admin.register(Bet)
 class BetAdmin(admin.ModelAdmin):
-    list_display = ('lucky_five', 'lottery',
-        'bettor', 'ticket', 'is_paid', 'is_active')
+    list_display = ('bettor', 'lucky_five',
+        'lottery', 'ticket', 'is_paid',
+        'is_active')
