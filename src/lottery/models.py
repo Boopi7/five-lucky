@@ -17,8 +17,8 @@ class Lottery(models.Model):
     # the tickets in this lottery
     policy_id = models.CharField(max_length=250)
 
-    # The lucky-five lottery result
-    lucky_five = models.JSONField(
+    # The random.org api response
+    api_response = models.JSONField(
         null=True,
         blank=True)
 
@@ -28,8 +28,13 @@ class Lottery(models.Model):
     def __str__(self):
         formatted_date = self.draw_date.strftime(
             '%B %d, %Y %H:%M %Z')
-        return 'Lottery ' + str(self.id) + \
-            ' - ' + formatted_date
+        return formatted_date
+
+    @property
+    def lucky_five(self):
+        return self.api_response.get(
+            'result').get('random').get(
+            'data')[0]
 
     def get_current_lottery():
         now = datetime.now(timezone.utc)

@@ -40,7 +40,7 @@ def new_lottery():
 
 
 # Every Sunday 09:00 UTC
-def draw_luckyfive():
+def draw_winners():
     # Generate luckyfive number
     status_code = 0
     headers = {'Content-Type': 'application/json'}
@@ -77,7 +77,7 @@ def draw_luckyfive():
 
                 # Get current lottery
                 current_lottery = Lottery.get_current_lottery()
-                current_lottery.lucky_five = response_dict
+                current_lottery.api_response = response_dict
 
                 # Draw lottery winners
                 lucky_five = response_dict.get(
