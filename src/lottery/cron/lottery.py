@@ -4,7 +4,8 @@ from datetime import (
     datetime, timezone, timedelta)
 from django.conf import settings
 
-from lottery.models import Lottery
+from lottery.models import (Lottery,
+    Bet)
 from lottery.cardano.operations import (
     generate_minting_policy)
 
@@ -80,6 +81,15 @@ def draw_luckyfive():
                 current_lottery.save()
 
                 # Draw lottery winners
+                lucky_five = response_dict.get(
+                    'result').get('random').get('data')[0]
+                print(lucky_five)
+
+                winners = Bet.objects.filter(
+                    lottery=current_lottery,
+                    lucky_five=lucky_five,
+                    is_active=True)
+                print(winners)
 
                 # Deactivate current lottery
         else:
