@@ -2,16 +2,22 @@
 {% load static %}
 
 {% block content %}
-    <!-- <div class="container-fluid countdown-timer">
-        <h1 align="center">00:00:00:00</h1>
-    </div> -->
 
-    <!-- Sections -->
-
-    <!-- countdown timer or result depending on time  -->
-
-    <!-- info section - ticket count and pot -->
-    <div class="container-fluid lottery-info">
+    <div class="container-fluid content">
+        {% if lottery.is_active %}
+            <h3>Active Lottery</h3>
+            <p>Lottery draw_date: {{ lottery }}</p>
+        {% else %}
+            <h3>Lottery Result</h3>
+            <ul>
+                <li>Draw date: {{ lottery }}</li>
+                <li>LuckyFive: {{ lottery.lucky_five }}</li>
+                <li>Winners: {{ lottery.winners }}</li>
+            </ul>
+        {% endif %}
+    </div>
+   
+   <!--  <div class="container-fluid lottery-info">
         <div class="row">
             <div class="col" align="center">
                 <h2>500/40,000</h2>
@@ -28,10 +34,10 @@
                 <h5>Pot</h5>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- top bets section -->
-    <div class="container-fluid top-bets">
+    <!-- <div class="container-fluid top-bets">
         <div class="row mb-2">
             <div class="col" align="center">
                 <h3>Latest Bets</h3>
@@ -89,7 +95,7 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    </div> -->
 
 {% endblock %}
 
