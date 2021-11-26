@@ -86,6 +86,7 @@ def draw_winners():
 
                 winning_bets = Bet.objects.filter(
                     lottery=current_lottery,
+                    lucky_five=lucky_five,
                     is_active=True)
                 lottery_winners = list(LotteryWinner(
                     bet=bet, lottery=current_lottery)
