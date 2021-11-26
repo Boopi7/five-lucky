@@ -19,11 +19,13 @@ except:
     config = {
         'DEBUG': 'True',
         'SECRET_KEY': 'xxxx',
+        'LUCKYFIVE_API_KEY': 'xxxx',
         'ALLOWED_HOSTS': [],
         'DB_NAME': '',
         'DB_USER': '',
         'DB_PASSWORD': '',
         'DB_HOST': '',
+        'PORT': '',
         'POLICY_DIR': '',
         'PAYMENT_SKEY': '',
         'PAYMENT_VKEY': ''
@@ -34,6 +36,8 @@ POLICY_DIR = config.get('POLICY_DIR')
 PAYMENT_SKEY = config.get('PAYMENT_SKEY')
 PAYMENT_VKEY = config.get('PAYMENT_VKEY')
 
+# Luckyfive API key used to generate the random numbers
+LUCKYFIVE_API_KEY = config.get('LUCKYFIVE_API_KEY')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -100,12 +104,12 @@ WSGI_APPLICATION = 'luckyfive.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': config.get('DB_NAME'),
         'USER': config.get('DB_USER'),
         'PASSWORD': config.get('DB_PASSWORD'),
         'HOST': config.get('DB_HOST'),
-        'PORT': '',
+        'PORT': config.get('PORT')
     }
 }
 

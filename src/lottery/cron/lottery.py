@@ -1,10 +1,11 @@
-import subprocess
+import subprocess, requests, json
 
 from datetime import (
     datetime, timezone, timedelta)
 from django.conf import settings
 
-from lottery.models import Lottery
+from lottery.models import (Lottery,
+    Bet, LotteryWinner)
 from lottery.cardano.operations import (
     generate_minting_policy)
 
@@ -39,5 +40,65 @@ def new_lottery():
 
 
 # Every Sunday 09:00 UTC
-def draw_lottery():
+def draw_winners():
+    # Generate luckyfive number
+    status_code = 0
+    headers = {'Content-Type': 'application/json'}
+    payload = {
+        'jsonrpc': '2.0',
+        'method': 'generateSignedIntegerSequences',
+        'params': {
+            'apiKey': settings.LUCKYFIVE_API_KEY,
+            'n': 1,
+            'length': 5,
+            'min': 0,
+            'max': 9,
+            'base': 10,
+            'userData': 'LuckyFive Weekly Draw'
+        },
+        'id': 1
+    }
+
+    while (status_code != 200):
+        response = requests.post(
+            'https://api.random.org/json-rpc/4/invoke',
+            data=json.dumps(payload),
+            headers=headers)
+        status_code = response.status_code
+
+        if status_code == 200:
+            response_dict = response.json()
+
+            if 'error' in response_dict.keys():
+                status_code = 500
+                print('Error processing request. Retrying.')
+            else:
+                print('Request Successful!')
+
+                # Get current lottery
+                current_lottery = Lottery.get_current_lottery()
+                current_lottery.api_response = response_dict
+
+                # Draw lottery winners
+                lucky_five = response_dict.get(
+                    'result').get('random').get('data')[0]
+                print(lucky_five)
+
+                winning_bets = Bet.objects.filter(
+                    lottery=current_lottery,
+                    lucky_five=lucky_five,
+                    is_active=True)
+                lottery_winners = list(LotteryWinner(
+                    bet=bet, lottery=current_lottery)
+                    for bet in winning_bets)
+                print(lottery_winners)
+                LotteryWinner.objects.bulk_create(
+                    lottery_winners)
+
+                # Deactivate current lottery
+                current_lottery.is_active = False
+                current_lottery.save()
+        else:
+            print('Error processing request. Retrying.')
+
     pass

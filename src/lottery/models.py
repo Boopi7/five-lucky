@@ -1,18 +1,7 @@
 from datetime import datetime, timezone
 from django.db import models
-
-
-# The LuckyFive that will be drawn every lottery
-class LuckyFive(models.Model):
-    # The result winning number
-    number = models.CharField(max_length=5)
-
-    # Something that could verify that this number
-    # is truly random (random.org)
-    signature = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.number
+from django.contrib.postgres.fields import (
+    ArrayField)
 
 
 class Lottery(models.Model):
@@ -28,12 +17,10 @@ class Lottery(models.Model):
     # the tickets in this lottery
     policy_id = models.CharField(max_length=250)
 
-    # The lucky-five lottery result
-    lucky_five = models.OneToOneField(
-        LuckyFive,
+    # The random.org api response
+    api_response = models.JSONField(
         null=True,
-        blank=True,
-        on_delete=models.SET_NULL)
+        blank=True)
 
     date_created = models.DateTimeField(
         auto_now_add=True)
@@ -41,8 +28,21 @@ class Lottery(models.Model):
     def __str__(self):
         formatted_date = self.draw_date.strftime(
             '%B %d, %Y %H:%M %Z')
-        return 'Lottery ' + str(self.id) + \
-            ' - ' + formatted_date
+        return formatted_date
+
+    @property
+    def lucky_five(self):
+        return self.api_response.get(
+            'result').get('random').get(
+            'data')[0]
+
+    @property
+    def bets(self):
+        return self.bet_set.all()
+
+    @property
+    def winners(self):
+        return list(self.lotterywinner_set.all())
 
     def get_current_lottery():
         now = datetime.now(timezone.utc)
@@ -54,7 +54,9 @@ class Lottery(models.Model):
 
 class Bet(models.Model):
   	# The bettor's lucky-five number
-    lucky_five = models.CharField(max_length=5)
+    lucky_five = ArrayField(
+        models.PositiveIntegerField(),
+        size=5)
 
     # The address where the bettor will send ADA to
     payment_address = models.CharField(max_length=250)
@@ -65,9 +67,13 @@ class Bet(models.Model):
         null=True,
         blank=True)
 
+    # The status of the bettor's bet if the ticket nft
+    # is already minted
+    is_active = models.BooleanField(default=False)
+
     # The status of the bettor's bet after checking if
     # he/she actually sent the ADA
-    is_active = models.BooleanField(default=False)
+    is_paid = models.BooleanField(default=False)
 
     # The lottery this bet is tied to
     lottery = models.ForeignKey(
@@ -82,4 +88,28 @@ class Bet(models.Model):
         blank=True)
 
     def __str__(self):
-        return self.tx_hash
+        return str(self.lucky_five)
+
+
+class LotteryWinner(models.Model):
+    lottery = models.ForeignKey(
+        Lottery,
+        on_delete=models.CASCADE)
+
+    # The bet of the winner
+    bet = models.ForeignKey(
+        Bet,
+        on_delete=models.CASCADE)
+
+    # Determines if the winner is paid or not
+    is_fulfilled = models.BooleanField(
+        default=False)
+
+    # The transaction ID of the prize payment
+    tx_id = models.CharField(
+        max_length=250,
+        null=True,
+        blank=True)
+
+    def __str__(self):
+        return str(self.bet)
