@@ -7,4 +7,8 @@ from .models import (
 
 # Register your models here.
 admin.site.register(Lottery)
-admin.site.register(Bet)
+
+@admin.register(Bet)
+class BetAdmin(admin.ModelAdmin):
+    list_display = ('lucky_five', 'lottery',
+        'bettor', 'ticket', 'is_paid', 'is_active')
