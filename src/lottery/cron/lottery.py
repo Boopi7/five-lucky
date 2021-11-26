@@ -78,7 +78,6 @@ def draw_luckyfive():
                 # Get current lottery
                 current_lottery = Lottery.get_current_lottery()
                 current_lottery.lucky_five = response_dict
-                current_lottery.save()
 
                 # Draw lottery winners
                 lucky_five = response_dict.get(
@@ -92,6 +91,8 @@ def draw_luckyfive():
                 print(winners)
 
                 # Deactivate current lottery
+                current_lottery.is_active = False
+                current_lottery.save()
         else:
             print('Error processing request. Retrying.')
 
