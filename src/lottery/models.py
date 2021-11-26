@@ -54,9 +54,13 @@ class Bet(models.Model):
         null=True,
         blank=True)
 
+    # The status of the bettor's bet if the ticket nft
+    # is already minted
+    is_active = models.BooleanField(default=False)
+
     # The status of the bettor's bet after checking if
     # he/she actually sent the ADA
-    is_active = models.BooleanField(default=False)
+    is_paid = models.BooleanField(default=False)
 
     # The lottery this bet is tied to
     lottery = models.ForeignKey(
