@@ -6,7 +6,12 @@ from .models import (
 
 
 # Register your models here.
-admin.site.register(Lottery)
+# admin.site.register(Lottery)
+@admin.register(Lottery)
+class LotteryAdmin(admin.ModelAdmin):
+    list_display = ('draw_date', 'policy_id',
+        'is_active', 'lucky_five')
+
 
 @admin.register(Bet)
 class BetAdmin(admin.ModelAdmin):
