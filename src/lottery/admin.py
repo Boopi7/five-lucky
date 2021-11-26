@@ -9,7 +9,7 @@ from .models import (
 # admin.site.register(Lottery)
 @admin.register(Lottery)
 class LotteryAdmin(admin.ModelAdmin):
-    list_display = ('draw_date', 'policy_id',
+    list_display = ('__str__', 'policy_id',
         'is_active', 'lucky_five')
 
 
