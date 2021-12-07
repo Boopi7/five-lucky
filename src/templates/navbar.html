@@ -1,6 +1,6 @@
 <nav class="navbar fixed-top navbar-dark bg-dark navbar-expand-lg">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{% url 'lottery:home' %}">
             <img 
                 src="/docs/5.1/assets/brand/bootstrap-logo.svg"
                 alt="" width="30" height="24" 
@@ -22,7 +22,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <div class="navbar-nav ms-auto">
                 <a class="nav-link" href="{% url 'lottery:buy-ticket' %}">Buy Ticket</a>
-                <a class="nav-link" href="#">Bets</a>
+                <a class="nav-link" href="{% url 'lottery:bets' %}">Bets</a>
                 <a class="nav-link" href="#">Results</a>
                 <a class="nav-link" href="#">Schedule</a>
                 <a class="nav-link" href="#">FAQ</a>

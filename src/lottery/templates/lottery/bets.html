@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container-fluid content">
+        <div class="table-responsive">
+            <table class="table table-bordered table-sm table-hover">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Bettor</th>
+                        <th>LuckyFive</th>
+                        <th>Ticket</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for bet in bets %}
+                    <tr>
+                        <td>{{ bet.bettor }}</td>
+                        <td>{{ bet.lucky_five }}</td>
+                        <td>{{ bet.ticket }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
