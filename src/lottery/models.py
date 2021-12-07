@@ -41,6 +41,12 @@ class Lottery(models.Model):
         return self.bet_set.all()
 
     @property
+    def active_bets(self):
+        return self.bet_set.filter(
+            is_active=True,
+            is_paid=True)
+
+    @property
     def winners(self):
         return list(self.lotterywinner_set.all())
 

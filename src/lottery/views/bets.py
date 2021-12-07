@@ -1,19 +1,18 @@
-from datetime import datetime, timezone, timedelta
-
 from django.shortcuts import render
 from django.views import View
-from lottery.models import Lottery
 
+from lottery.models import Bet, Lottery
 
-class HomeView(View):
-    template_name = 'lottery/homepage.html'
+class BetsListView(View):
+    template_name = 'lottery/bets.html'
 
     def get(self, request, *args, **kwargs):
         # Get current lottery
-        lottery = Lottery.objects.last()
+        lottery = Lottery.get_current_lottery()
 
         context = {
-            'lottery': lottery
+            'lottery': lottery,
+            'bets': lottery.active_bets
         }
 
         return render(request, self.template_name, context)
