@@ -7,12 +7,9 @@ class BetsListView(View):
     template_name = 'lottery/bets.html'
 
     def get(self, request, *args, **kwargs):
-        # Get current lottery
         lottery = Lottery.get_current_lottery()
 
         context = {
-            'lottery': lottery,
-            'bets': lottery.active_bets
+            'lottery': lottery
         }
-
         return render(request, self.template_name, context)

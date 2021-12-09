@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    
+    <div class="container-fluid">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for lottery in lotteries %}
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-header">
+                        {{ lottery }}
+                    </div>
+                    <div class="card-body" align="center">
+                        <p class="fs-1 fw-bold">12312</p>
+                        <div class="row">
+                            <div class="col">
+                                {{ lottery.active_bets.count }} bets
+                            </div>
+                            <div class="col">
+                                {{ lottery.winners.count }} Winners
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    
+
+{% endblock %}

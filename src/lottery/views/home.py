@@ -6,7 +6,7 @@ from lottery.models import Lottery
 
 
 class HomeView(View):
-    template_name = 'lottery/homepage.html'
+    template_name = 'lottery/home.html'
 
     def get(self, request, *args, **kwargs):
         # Get current lottery
