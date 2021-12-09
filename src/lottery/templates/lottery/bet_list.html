@@ -6,7 +6,7 @@
     <div class="container-fluid" align="center">
         <div class="table-responsive bets-table">
             <table class="table table-bordered table-sm table-hover caption-top">
-                <caption>Current Lottery: {{ lottery }}</caption>
+                <caption>{{ lottery }}</caption>
                 <thead class="table-dark" align="center">
                     <tr>
                         <th>Bettor</th>
@@ -15,7 +15,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for bet in lottery.active_bets %}
+                    {% for bet in object_list %}
                     <tr>
                         <td>{{ bet.bettor }}</td>
                         <td>{{ bet.lucky_five }}</td>

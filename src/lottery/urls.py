@@ -11,7 +11,7 @@ app_name = 'lottery'
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('buy-ticket/', BuyTicketView.as_view(), name='buy-ticket'),
-    path('bets/', BetsListView.as_view(), name='bets'),
+    path('bets/', BetsListView.as_view(), name='bet-list'),
     path('lotteries/', LotteryListView.as_view(), name='lottery-list'),
     path('lotteries/<int:pk>/', LotteryDetailView.as_view(), name='lottery-detail')
 ]

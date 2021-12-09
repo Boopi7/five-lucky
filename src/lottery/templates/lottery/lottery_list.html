@@ -17,7 +17,9 @@
                         <p class="fs-1 fw-bold">12312</p>
                         <div class="row">
                             <div class="col">
-                                {{ lottery.active_bets.count }} Bets
+                                <a href="{% url 'lottery:bet-list' %}?lottery_id={{ lottery.pk }}">
+                                    {{ lottery.active_bets.count }} Bets
+                                </a>
                             </div>
                             <div class="col">
                                 {{ lottery.winners.count }} Winners
