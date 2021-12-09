@@ -25,16 +25,25 @@ class Lottery(models.Model):
     date_created = models.DateTimeField(
         auto_now_add=True)
 
+    # Determines the sequence of the lottery object
+    seq = models.PositiveIntegerField(
+        null=True,
+        blank=True,
+        unique=True)
+
     def __str__(self):
+        seq = 'Lottery ' + str(self.seq)
         formatted_date = self.draw_date.strftime(
             '%B %d, %Y %H:%M %Z')
-        return formatted_date
+        return seq + ' - ' + formatted_date
 
     @property
     def lucky_five(self):
-        return self.api_response.get(
-            'result').get('random').get(
-            'data')[0]
+        if self.api_response:
+            return self.api_response.get(
+                'result').get('random').get(
+                'data')[0]
+        return None
 
     @property
     def bets(self):
@@ -48,7 +57,7 @@ class Lottery(models.Model):
 
     @property
     def winners(self):
-        return list(self.lotterywinner_set.all())
+        return self.lotterywinner_set.all()
 
     def get_current_lottery():
         now = datetime.now(timezone.utc)
