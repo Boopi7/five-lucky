@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views import View
+from django.views.generic import DetailView
 
 from lottery.models import Lottery
 
@@ -16,14 +17,5 @@ class LotteryListView(View):
         return render(request, self.template_name, context)
 
 
-class LotteryDetailView(View):
-    template_name = 'lottery/results.html'
-
-    def get(self, request, *args, **kwargs):
-        lotteries = Lottery.objects.filter(
-            is_active=False)
-
-        context = {
-            'lotteries': lotteries
-        }
-        return render(request, self.template_name, context)
+class LotteryDetailView(DetailView):
+    queryset = Lottery.objects.all()

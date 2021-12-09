@@ -9,13 +9,15 @@
             <div class="col">
                 <div class="card h-100">
                     <div class="card-header">
-                        {{ lottery }}
+                        <a href="{% url 'lottery:lottery-detail' lottery.pk %}">
+                            {{ lottery }}
+                        </a>
                     </div>
                     <div class="card-body" align="center">
                         <p class="fs-1 fw-bold">12312</p>
                         <div class="row">
                             <div class="col">
-                                {{ lottery.active_bets.count }} bets
+                                {{ lottery.active_bets.count }} Bets
                             </div>
                             <div class="col">
                                 {{ lottery.winners.count }} Winners
