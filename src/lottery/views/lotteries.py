@@ -1,20 +1,15 @@
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import DetailView
+from django.views.generic import (
+    DetailView, ListView)
 
 from lottery.models import Lottery
 
 
-class LotteryListView(View):
-    template_name = 'lottery/lottery_list.html'
-
-    def get(self, request, *args, **kwargs):
-        lotteries = Lottery.objects.order_by('-seq')
-
-        context = {
-            'lotteries': lotteries
-        }
-        return render(request, self.template_name, context)
+class LotteryListView(ListView):
+    paginate_by = 9
+    ordering = '-seq'
+    queryset = Lottery.objects.all()
 
 
 class LotteryDetailView(DetailView):
