@@ -3,7 +3,20 @@ from django.views import View
 
 from lottery.models import Lottery
 
-class ResultsView(View):
+
+class LotteryListView(View):
+    template_name = 'lottery/lottery_list.html'
+
+    def get(self, request, *args, **kwargs):
+        lotteries = Lottery.objects.order_by('-seq')
+
+        context = {
+            'lotteries': lotteries
+        }
+        return render(request, self.template_name, context)
+
+
+class LotteryDetailView(View):
     template_name = 'lottery/results.html'
 
     def get(self, request, *args, **kwargs):
