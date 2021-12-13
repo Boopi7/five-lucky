@@ -12,17 +12,8 @@ class BetsListView(ListView):
     queryset = Bet.objects.all()
     template_name = 'lottery/bet_list.html'
 
-    def get_queryset(self):
+    def get_queryset(self, lottery):
         queryset = self.queryset
-        lottery_seq = self.request.GET.get(
-            'lottery')
-
-        # TODO: add check if there's no current lottery
-        lottery = Lottery.get_current_lottery()
-        if lottery_seq:
-            lottery = get_object_or_404(
-                Lottery, seq=int(lottery_seq))
-
         queryset = lottery.active_bets
 
         ordering = self.ordering
@@ -46,7 +37,7 @@ class BetsListView(ListView):
             if lottery is None:
                 raise Exception('No active lottery')
 
-            self.object_list = self.get_queryset()
+            self.object_list = self.get_queryset(lottery)
             allow_empty = self.get_allow_empty()
 
             if not allow_empty:
