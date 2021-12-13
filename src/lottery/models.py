@@ -27,8 +27,7 @@ class Lottery(models.Model):
 
     # Determines the sequence of the lottery object
     seq = models.PositiveIntegerField(
-        null=True,
-        blank=True,
+        default=0,
         unique=True)
 
     def __str__(self):

@@ -33,10 +33,17 @@ def new_lottery():
         tzinfo=timezone.utc
     )
 
+    # Get lotter sequence
+    seq = 1
+    lastest_lottery = Lottery.objects.last()
+    if lastest_lottery:
+        seq = lastest_lottery.seq + 1
+
     # Create lottery object
     lottery = Lottery.objects.create(
         policy_id=policyID,
-        draw_date=draw_date)
+        draw_date=draw_date,
+        seq=seq)
 
 
 # Every Sunday 09:00 UTC

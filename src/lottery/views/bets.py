@@ -13,14 +13,13 @@ class BetsListView(ListView):
 
     def get_queryset(self):
         queryset = self.queryset
-        lottery_id = self.request.GET.get(
-            'lottery_id')
+        lottery_seq = self.request.GET.get(
+            'lottery')
 
         lottery = Lottery.get_current_lottery()
-        if lottery_id:
-            lottery_id = int(lottery_id)
+        if lottery_seq:
             lottery = get_object_or_404(
-                Lottery, id=lottery_id)
+                Lottery, seq=int(lottery_seq))
 
         queryset = lottery.active_bets
 
@@ -35,12 +34,13 @@ class BetsListView(ListView):
     def get(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
         allow_empty = self.get_allow_empty()
-        lottery_id = self.request.GET.get('lottery_id')
+        lottery_seq = self.request.GET.get(
+            'lottery')
 
         lottery = Lottery.get_current_lottery()
-        if lottery_id:
+        if lottery_seq:
             lottery = get_object_or_404(
-                Lottery, id=int(lottery_id))
+                Lottery, seq=int(lottery_seq))
 
         if not allow_empty:
             # When pagination is enabled and object_list is a queryset,
@@ -56,4 +56,5 @@ class BetsListView(ListView):
                 })
         context = self.get_context_data()
         context['lottery'] = lottery
+
         return self.render_to_response(context)
