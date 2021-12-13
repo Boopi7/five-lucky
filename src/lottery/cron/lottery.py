@@ -83,22 +83,23 @@ def draw_winners():
                 print('Request Successful!')
 
                 # Get current lottery
+                # TODO: add check if there's no current lottery
                 current_lottery = Lottery.get_current_lottery()
                 current_lottery.api_response = response_dict
+                print('Drawing Luckyfive for: {}'.format(
+                    current_lottery))
 
                 # Draw lottery winners
                 lucky_five = response_dict.get(
                     'result').get('random').get('data')[0]
-                print(lucky_five)
+                print('Luckyfive is: {}'.format(lucky_five))
 
-                winning_bets = Bet.objects.filter(
-                    lottery=current_lottery,
-                    lucky_five=lucky_five,
-                    is_active=True)
+                winning_bets = current_lottery.active_bets.filter(
+                    lucky_five=lucky_five)
                 lottery_winners = list(LotteryWinner(
                     bet=bet, lottery=current_lottery)
                     for bet in winning_bets)
-                print(lottery_winners)
+                print('Lottery Winners: {}'.format(lottery_winners))
                 LotteryWinner.objects.bulk_create(
                     lottery_winners)
 

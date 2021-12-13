@@ -16,6 +16,7 @@ class BetsListView(ListView):
         lottery_seq = self.request.GET.get(
             'lottery')
 
+        # TODO: add check if there's no current lottery
         lottery = Lottery.get_current_lottery()
         if lottery_seq:
             lottery = get_object_or_404(
@@ -37,6 +38,7 @@ class BetsListView(ListView):
         lottery_seq = self.request.GET.get(
             'lottery')
 
+        # TODO: add check if there's no current lottery
         lottery = Lottery.get_current_lottery()
         if lottery_seq:
             lottery = get_object_or_404(

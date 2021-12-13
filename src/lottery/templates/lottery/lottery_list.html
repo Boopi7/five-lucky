@@ -14,7 +14,11 @@
                         </a>
                     </div>
                     <div class="card-body" align="center">
-                        <p class="fs-1 fw-bold">12312</p>
+                        {% if lottery.lucky_five %}
+                            <p class="fs-1 fw-bold">{{ lottery.lucky_five }}</p>
+                        {% else %}
+                            <p class="fs-1 fw-bold">ongoing</p>
+                        {% endif %}
                         <div class="row">
                             <div class="col">
                                 <a href="{% url 'lottery:bet-list' %}?lottery={{ lottery.seq }}">
