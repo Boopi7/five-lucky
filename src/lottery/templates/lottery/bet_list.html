@@ -2,29 +2,32 @@
 {% load static %}
 
 {% block content %}
-
     <div class="container-fluid" align="center">
-        <div class="table-responsive bets-table">
-            <table class="table table-bordered table-sm table-hover caption-top">
-                <caption>{{ lottery }}</caption>
-                <thead class="table-dark" align="center">
-                    <tr>
-                        <th>Bettor</th>
-                        <th>LuckyFive</th>
-                        <th>Ticket</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for bet in object_list %}
-                    <tr>
-                        <td>{{ bet.bettor }}</td>
-                        <td>{{ bet.lucky_five }}</td>
-                        <td>{{ bet.ticket }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+        {% if error %}
+            <h1>{{ error }}</h1>
+        {% else %}
+            <div class="table-responsive bets-table">
+                <table class="table table-bordered table-sm table-hover caption-top">
+                    <caption>{{ lottery }}</caption>
+                    <thead class="table-dark" align="center">
+                        <tr>
+                            <th>Bettor</th>
+                            <th>LuckyFive</th>
+                            <th>Ticket</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for bet in object_list %}
+                        <tr>
+                            <td>{{ bet.bettor }}</td>
+                            <td>{{ bet.lucky_five }}</td>
+                            <td>{{ bet.ticket }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
     </div>
 
 {% endblock %}
