@@ -17,11 +17,11 @@ used for the betting module.
 
 	`mkdir -p $HOME/.luckyfive/payment`
 
-5. Clone the repo
+5. Clone the repository.
 
 	`git clone https://github.com/riidatibula/lucky-five.git`
 
-6. Create a json config file
+6. Create a json config file.
 
 	`sudo touch /etc/luckyfive-config.json; sudo -e /etc/luckyfive-config.json`
 
