@@ -13,3 +13,7 @@
 .lottery-list a:link {
     text-decoration: none;
 }
+
+.buy-ticket-notice {
+    max-width: 600px;
+}

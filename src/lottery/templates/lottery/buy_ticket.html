@@ -3,8 +3,29 @@
 
 {% block content %}
 
-    <div class="container-fluid" align="center">
-        <h1>Buy ticket</h1>
+    <div class="container-fluid buy-ticket-notice">
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="walletCheck">
+                    <label class="form-check-label" for="walletCheck">
+                        I am not sending from an exchange. I am using a cardano
+                        native wallet that supports NFTs (e.g. Daedalus, Yoroi, Nami)
+                    </label>
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="termsCheck">
+                    <label class="form-check-label" for="termsCheck">
+                        I have read and agreed to the <a href="#">terms and conditions</a>.
+                    </label>
+                </div>
+                <div class="continue-button" align="end">
+                    <button class="btn btn-primary">
+                        Continue
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
 {% endblock %}
