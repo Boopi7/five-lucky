@@ -4,11 +4,11 @@
 {% block content %}
     <div class="container-fluid" align="center">
         {% if error %}
-            <h1>{{ error }}</h1>
-        {% else %}
+            <h4>{{ error }}</h4>
+        {% elif object_list %}
             <div class="table-responsive bets-table">
                 <table class="table table-bordered table-sm table-hover caption-top">
-                    <caption>{{ lottery }}</caption>
+                    <caption>{{ lottery }}: ({{ object_list.count }} bets)</caption>
                     <thead class="table-dark" align="center">
                         <tr>
                             <th>Bettor</th>
@@ -27,6 +27,9 @@
                     </tbody>
                 </table>
             </div>
+        {% else %}
+            <h4>No bets found.</h4>
+            <p class="text-muted">{{ lottery }}</p>
         {% endif %}
     </div>
 
