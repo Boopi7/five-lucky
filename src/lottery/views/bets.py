@@ -26,16 +26,21 @@ class BetsListView(ListView):
 
     def get(self, request, *args, **kwargs):
         context = {}
+
         try:
             lottery_seq = self.request.GET.get(
                 'lottery')
             lottery = Lottery.get_current_lottery()
+
             if lottery_seq:
-                lottery = get_object_or_404(
-                    Lottery, seq=int(lottery_seq))
+                if lottery_seq.isdigit():
+                    lottery = get_object_or_404(
+                        Lottery, seq=int(lottery_seq))
+                else:
+                    raise Exception('Opps. Lottery not found.')
 
             if lottery is None:
-                raise Exception('No active lottery')
+                raise Exception('No active lottery today.')
 
             self.object_list = self.get_queryset(lottery)
             allow_empty = self.get_allow_empty()
@@ -55,8 +60,9 @@ class BetsListView(ListView):
             context = self.get_context_data()
             context['lottery'] = lottery
 
+            return self.render_to_response(context)
+
         except Exception as e:
             context = {'error': e}
-            return render(request, self.template_name, context)
 
-        return self.render_to_response(context)
+        return render(request, self.template_name, context)
