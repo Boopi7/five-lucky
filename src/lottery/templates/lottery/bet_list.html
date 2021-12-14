@@ -8,7 +8,15 @@
         {% elif object_list %}
             <div class="table-responsive bets-table">
                 <table class="table table-bordered table-sm table-hover caption-top">
-                    <caption>{{ lottery }}: ({{ object_list.count }} bets)</caption>
+                    <caption>
+                        <a
+                            href="{% url 'lottery:lottery-detail' lottery.pk %}"
+                            class="link-dark"
+                        >
+                            {{ lottery }}
+                            <strong>({{ object_list.count }} bets)</strong>
+                        </a>
+                    </caption>
                     <thead class="table-dark" align="center">
                         <tr>
                             <th>Bettor</th>

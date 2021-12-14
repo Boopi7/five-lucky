@@ -4,14 +4,19 @@
 {% block content %}
     
     <div class="container-fluid">
-        <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="row row-cols-1 row-cols-md-3 g-4 lottery-list">
         {% for lottery in object_list %}
             <div class="col">
                 <div class="card h-100">
                     <div class="card-header">
-                        <a href="{% url 'lottery:lottery-detail' lottery.pk %}">
-                            {{ lottery }}
-                        </a>
+                        <h5>
+                            <a
+                                class="link-dark"
+                                href="{% url 'lottery:lottery-detail' lottery.pk %}"
+                            >
+                                {{ lottery }}
+                            </a>
+                        </h5>
                     </div>
                     <div class="card-body" align="center">
                         {% if lottery.lucky_five %}
