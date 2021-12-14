@@ -15,7 +15,7 @@ policy related files for minting ticket-nfts.
 4. Create the payment directory to store payment key-pair
 used for the betting module.
 
-	`mkdir -p $HOME/.luckyfive/payments`
+	`mkdir -p $HOME/.luckyfive/payment`
 
 5. Clone the repo
 
@@ -38,23 +38,23 @@ used for the betting module.
         "DB_PASSWORD": "mystrongpassword",
         "DB_HOST": "localhost",
         "POLICY_DIR": "$HOME/.luckyfive/policy/",
-        "PAYMENT_SKEY": "$HOME/.luckyfive/payments/payment.skey",
-        "PAYMENT_VKEY": "$HOME/.luckyfive/payments/payment.vkey"
+        "PAYMENT_SKEY": "$HOME/.luckyfive/payment/payment.skey",
+        "PAYMENT_VKEY": "$HOME/.luckyfive/payment/payment.vkey"
 	}
 	```
 
-7. Create a virtual environment under the cloned project
+7. Create a virtual environment under the cloned project.
 
 	`cd <project-directory>; python3 -m virtualenv .venv` 
 
-8. Activate virtualenv
+8. Activate virtualenv.
 
 	`source .venv/bin/active`
 
-9. Install dependencies
+9. Install dependencies.
 
 	`pip -r install requirements.txt`
 
-10. Run project. The default local development url is at [localhost:8000](http://localhost:8000)
+10. Run project. The default local development url is at [localhost:8000](http://localhost:8000).
 
 	`python src/manage.py runserver`
