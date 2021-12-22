@@ -21,11 +21,35 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="{% url 'lottery:buy-ticket' %}">Buy Ticket</a>
-                <a class="nav-link" href="{% url 'lottery:bet-list' %}">Bets</a>
-                <a class="nav-link" href="{% url 'lottery:lottery-list' %}">Lotteries</a>
-                <a class="nav-link" href="#">Schedule</a>
-                <a class="nav-link" href="#">FAQ</a>
+                {% if request.path == "/buy-ticket/" %}
+                    <a class="nav-link active" href="{% url 'lottery:buy-ticket' %}">Buy Ticket</a>
+                {% else %}
+                    <a class="nav-link" href="{% url 'lottery:buy-ticket' %}">Buy Ticket</a>
+                {% endif %}
+
+                {% if request.path == "/bets/" %}
+                    <a class="nav-link active" href="{% url 'lottery:bet-list' %}">Bets</a>
+                {% else %}
+                    <a class="nav-link" href="{% url 'lottery:bet-list' %}">Bets</a>
+                {% endif %}
+
+                {% if request.path == "/lotteries/" %}
+                    <a class="nav-link active" href="{% url 'lottery:lottery-list' %}">Lotteries</a>
+                {% else %}
+                    <a class="nav-link" href="{% url 'lottery:lottery-list' %}">Lotteries</a>
+                {% endif %}
+
+                {% if request.path == "/schedule/" %}
+                    <a class="nav-link active" href="#">Schedule</a>
+                {% else %}
+                    <a class="nav-link" href="#">Schedule</a>
+                {% endif %}
+                
+                {% if request.path == "/faq/" %}
+                    <a class="nav-link active" href="#">FAQ</a>
+                {% else %}
+                    <a class="nav-link" href="#">FAQ</a>
+                {% endif %}
             </div>
         </div>
     </div>

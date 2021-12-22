@@ -3,7 +3,7 @@
 
 {% block content %}
 
-    <div class="container-fluid buy-ticket-notice">
+    <div class="container-fluid buy-ticket-notice mb-5">
         <div class="card">
             <div class="card-body">
                 <div class="mb-3 form-check">
@@ -19,6 +19,30 @@
                         I have read and agreed to the <a href="#">terms and conditions</a>.
                     </label>
                 </div>
+                <div id="alert"></div>
+                <div class="continue-button" align="end">
+                    <button class="btn btn-primary" onclick="acceptBuyTicketNotice()">
+                        Continue
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid buy-ticket-notice">
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-3">
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" aria-describedby="address" disabled readonly>
+                        addr1q8jhm8jyrg90k257ydac04cydql3g2d3xgew9aklr03mwq93t2u48rlllwv7utx4wte3p89ykywn0ykjz49w94yg7uxq4d4jav
+                    </textarea>
+                    <div id="address" class="form-text">Please send exactly 5 ADA to this address</div>
+                </div>
+                <div class="mb-3">
+                    <label for="luckyFive" class="form-label">Lucky Five</label>
+                    <input type="number" class="form-control" id="luckyFive" aria-describedby="help">
+                    <div id="help" class="form-text">Please input your lucky-five number</div>
+                </div>
                 <div class="continue-button" align="end">
                     <button class="btn btn-primary">
                         Continue
@@ -28,4 +52,44 @@
         </div>
     </div>
 
+{% endblock %}
+
+
+{% block script %}
+    <script type="text/javascript">
+
+        function acceptBuyTicketNotice() {
+            var walletCheck = document.getElementById("walletCheck").checked;
+            var termsCheck = document.getElementById("termsCheck").checked;
+            var $alert = $("#alert");
+            $alert.empty();
+
+            if (!walletCheck) {
+                $alert.append(
+                    '<div class="alert alert-danger mb-3" role="alert">Please accept wallet condition.</div>')
+            } else if (!termsCheck) {
+                $alert.append(
+                    '<div class="alert alert-danger mb-3" role="alert">Please accept terms and condition.</div>')
+            } else {
+                $.ajax({
+                    url: `{% url 'lottery:accept-notice' %}`,
+                    data: {
+                        walletCheck: walletCheck,
+                        termsCheck: termsCheck
+                    },
+                    success: function (response) {
+                        console.log(response)
+                        if (response.status == 200) {
+
+                        } else {
+
+                        }
+
+                    },
+                    dataType: "json"
+                });
+            }
+        }
+
+    </script>
 {% endblock %}
