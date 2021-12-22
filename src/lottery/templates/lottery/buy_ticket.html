@@ -64,12 +64,10 @@
             var $alert = $("#alert");
             $alert.empty();
 
-            if (!walletCheck) {
+            if (!walletCheck || !termsCheck) {
                 $alert.append(
-                    '<div class="alert alert-danger mb-3" role="alert">Please accept wallet condition.</div>')
-            } else if (!termsCheck) {
-                $alert.append(
-                    '<div class="alert alert-danger mb-3" role="alert">Please accept terms and condition.</div>')
+                    '<div class="alert alert-danger mb-3" role="alert">' +
+                    'Please agree to all terms and conditions.</div>');
             } else {
                 $.ajax({
                     url: `{% url 'lottery:accept-notice' %}`,
@@ -79,12 +77,13 @@
                     },
                     success: function (response) {
                         console.log(response)
-                        if (response.status == 200) {
+                        if (response.status_code == 200) {
 
                         } else {
-
+                            let message = '<div class="alert alert-danger mb-3" role="alert">' +
+                                response.message + '</div>';
+                            $alert.append(message);
                         }
-
                     },
                     dataType: "json"
                 });

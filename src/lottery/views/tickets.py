@@ -11,18 +11,15 @@ class AcceptBuyTicketNotice(View):
                 wallet_check = self.request.GET.get('walletCheck')
                 terms_check = self.request.GET.get('termsCheck')
 
-                if wallet_check != 'true':
-                    raise Exception(
-                        'Please accept wallet condition.')
-                if terms_check != 'true':
-                    raise Exception(
-                        'Please accept terms and condition.')
+                if not (wallet_check == 'true' and terms_check == 'true'):
+                    raise Exception('You must accept all terms and conditions.')
 
-                return JsonResponse(data = {'data': 'yey', 'status': 200})
+                return JsonResponse(data = {'data': 'yey', 'status_code': 200})
+
             raise Exception('Unable to process request.')
 
         except Exception as e:
-            return JsonResponse(data = {'error': str(e), 'status': 500})
+            return JsonResponse(data = {'message': str(e), 'status_code': 500})
 
 
 class BuyTicketView(View):
