@@ -54,7 +54,3 @@ used for the betting module.
 9. Install dependencies.
 
 	`pip -r install requirements.txt`
-
-10. Run project. The default local development url is at [localhost:8000](http://localhost:8000).
-
-	`python src/manage.py runserver`
